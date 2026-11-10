@@ -44,12 +44,11 @@ h2{font-size:clamp(13px,1.35vw,18px);margin:0;letter-spacing:.07em}.tag{font-siz
 @media(max-width:720px){.usefulNumbers{height:auto;min-height:42px;white-space:normal;flex-wrap:wrap;gap:7px 14px;padding:8px}.usefulNumbers .label{width:100%;text-align:center}main{height:auto}}
 
 .eventsPanel{grid-column:1 / -1;min-height:0;padding:9px 13px}
-.eventsGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
-.eventItem{display:flex;align-items:center;gap:9px;min-width:0;background:rgba(255,255,255,.035);border-radius:9px;padding:7px 9px;text-decoration:none;color:var(--white)}
-.eventIcon{font-size:clamp(19px,2vw,26px);flex:0 0 auto}
-.eventName{font-size:clamp(11px,1.1vw,14px);font-weight:850;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.eventMeta{font-size:clamp(9px,.85vw,11px);color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-@media(max-width:720px){.eventsPanel{grid-column:auto}.eventsGrid{grid-template-columns:1fr}}
+.eventsFrame{display:block;width:100%;height:205px;border:0;border-radius:10px;background:#fff}
+.eventsLinks{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:7px;font-size:clamp(10px,.9vw,12px)}
+.eventsLinks a{color:#9dcaff;text-decoration:none;font-weight:750}
+.eventsLinks span{color:var(--muted)}
+@media(max-width:720px){.eventsPanel{grid-column:auto;min-height:270px}.eventsFrame{height:205px}.eventsLinks{gap:10px}}
 </style>
 </head>
 <body>
@@ -85,11 +84,13 @@ h2{font-size:clamp(13px,1.35vw,18px);margin:0;letter-spacing:.07em}.tag{font-siz
  </section>
 
  <section class="panel eventsPanel">
-  <div class="panelhead"><h2>🎉 BIG EVENTS · NEXT 7 DAYS</h2><span class="tag">10–17 NOV · OSLO & LØRENSKOG</span></div>
-  <div class="eventsGrid">
-   <a class="eventItem" href="https://www.visitoslo.com/no/hva-skjer/kalender/" target="_blank" rel="noopener"><span class="eventIcon">🎄</span><span style="min-width:0"><div class="eventName">Jul i Vinterland</div><div class="eventMeta">10–17 Nov · Spikersuppa · Free</div></span></a>
-   <a class="eventItem" href="https://www.visitoslo.com/no/hva-skjer/festivaler/" target="_blank" rel="noopener"><span class="eventIcon">🎬</span><span style="min-width:0"><div class="eventName">Film fra Sør</div><div class="eventMeta">10–15 Nov · Oslo · Film festival</div></span></a>
-   <a class="eventItem" href="https://www.lorenskoghus.no/program/" target="_blank" rel="noopener"><span class="eventIcon">🎭</span><span style="min-width:0"><div class="eventName">Ylvis & Calle – Et juleshow</div><div class="eventMeta">12 Nov · Lørenskog Hus</div></span></a>
+  <div class="panelhead"><h2>🎉 WHAT’S ON · UPCOMING EVENTS</h2><span class="tag">OSLO · UPDATED DAILY</span></div>
+  <iframe class="eventsFrame" src="https://locl.no/embed/oslo?antall=5" title="Upcoming events in Oslo — Locl" loading="lazy"></iframe>
+  <div class="eventsLinks">
+   <span>Also check nearby Lørenskog events:</span>
+   <a href="https://altskjer.no/lorenskog" target="_blank" rel="noopener">All Lørenskog events ↗</a>
+   <a href="https://www.lorenskoghus.no/program/" target="_blank" rel="noopener">Lørenskog Hus programme ↗</a>
+   <a href="https://www.visitoslo.com/whats-on/festivals/festival-calendar" target="_blank" rel="noopener">Oslo festivals ↗</a>
   </div>
  </section>
 </main>
