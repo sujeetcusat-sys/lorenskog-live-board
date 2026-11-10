@@ -29,17 +29,17 @@ h2{font-size:clamp(13px,1.35vw,18px);margin:0;letter-spacing:.07em}.tag{font-siz
 .hourly{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px;text-align:center;flex:1;align-items:center}
 .hour{background:rgba(255,255,255,.035);border-radius:10px;padding:7px 3px}.hour span{display:block;color:var(--muted);font-size:clamp(9px,.9vw,12px)}.hour b{display:block;font-size:clamp(12px,1.35vw,17px);margin-top:3px}.hour i{font-style:normal;font-size:clamp(16px,1.8vw,23px);display:block;margin:3px 0}
 .transitPanel{display:flex;flex-direction:column}.transitPanel .panelhead{margin-bottom:5px}.feedNote{color:var(--muted);font-size:clamp(8px,.8vw,10px);white-space:nowrap}
-.tableWrap{min-height:0;overflow:hidden}table{width:100%;border-collapse:collapse;table-layout:fixed}td{padding:clamp(5px,.72vw,9px) 4px;border-bottom:1px solid var(--line);font-size:clamp(11px,1.15vw,15px);vertical-align:middle}tr:last-child td{border-bottom:0}
-.route{font-weight:900;font-size:clamp(13px,1.4vw,18px);width:17%;white-space:nowrap;color:var(--blue)}.dest{font-weight:650;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.when{text-align:right;width:25%;font-weight:850;font-size:clamp(14px,1.65vw,21px);white-space:nowrap;font-variant-numeric:tabular-nums}.subtime{color:var(--muted);font-size:.68em;display:block;margin-top:2px;font-weight:500}
+.tableWrap{min-height:0;overflow:hidden}table{width:100%;border-collapse:collapse;table-layout:fixed}td{padding:clamp(6px,.8vw,10px) 4px;border-bottom:1px solid var(--line);font-size:clamp(13px,1.3vw,17px);vertical-align:middle}tr:last-child td{border-bottom:0}
+.route{font-weight:950;font-size:clamp(16px,1.7vw,22px);width:19%;white-space:nowrap;color:var(--blue)}.dest{font-weight:800;font-size:clamp(14px,1.45vw,19px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.when{text-align:right;width:25%;font-weight:850;font-size:clamp(14px,1.65vw,21px);white-space:nowrap;font-variant-numeric:tabular-nums}.subtime{color:var(--muted);font-size:.68em;display:block;margin-top:2px;font-weight:500}
 .soon{color:var(--green)}.delayed{color:var(--amber)}.cancelled{color:var(--red);text-decoration:line-through}.empty{color:var(--muted);padding:16px 4px;font-size:clamp(11px,1vw,13px)}
 .status{position:fixed;bottom:3px;right:12px;color:#71839a;font-size:9px}
 @media(max-width:720px){body{height:auto;min-height:100%;overflow:auto}header{height:58px}main{height:auto;grid-template-columns:1fr;grid-template-rows:auto auto auto auto}.panel{min-height:210px}.calendarPanel{min-height:250px}.weatherPanel{min-height:220px}.transitPanel{min-height:260px}.status{position:static;text-align:right;margin-top:6px}}
 @media(min-width:721px) and (max-height:620px){body{padding:8px}header{height:48px;margin-bottom:8px}main{height:calc(100% - 56px);gap:8px;grid-template-rows:minmax(180px,.72fr) minmax(0,1.28fr)}.panel{padding:9px}.weatherDivider{margin:6px 0}.hour{padding:4px 2px}td{padding:4px}}
 
-.usefulNumbers{height:30px;margin-top:8px;display:flex;align-items:center;justify-content:center;gap:clamp(10px,2.2vw,28px);background:#122238;border:1px solid var(--line);border-radius:10px;padding:3px 10px;white-space:nowrap;overflow:hidden}
+.usefulNumbers{height:36px;margin-top:8px;display:flex;align-items:center;justify-content:center;gap:clamp(10px,2.2vw,28px);background:#122238;border:1px solid var(--line);border-radius:10px;padding:3px 10px;white-space:nowrap;overflow:hidden}
 .usefulNumbers .label{font-size:clamp(9px,.9vw,12px);font-weight:800;letter-spacing:.08em;color:var(--muted)}
-.usefulNumbers a{color:var(--white);text-decoration:none;font-size:clamp(10px,1.05vw,14px);font-weight:750}
-.usefulNumbers a b{color:var(--blue);font-size:1.12em;margin-right:4px}
+.usefulNumbers a{color:var(--white);text-decoration:none;font-size:clamp(12px,1.2vw,16px);font-weight:800}
+.usefulNumbers a b{color:var(--blue);font-size:1.28em;font-weight:950;margin-right:4px}
 .usefulNumbers .emergency{color:#ffb2a8}
 @media(max-width:720px){.usefulNumbers{height:auto;min-height:42px;white-space:normal;flex-wrap:wrap;gap:7px 14px;padding:8px}.usefulNumbers .label{width:100%;text-align:center}main{height:auto}}
 </style>
