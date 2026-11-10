@@ -12,7 +12,7 @@ body{padding:clamp(10px,1.6vw,22px);overflow:hidden}
 header{height:64px;display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
 .brand{font-size:clamp(17px,2vw,26px);font-weight:850;letter-spacing:.09em}.sub{color:var(--muted);font-size:clamp(9px,1vw,12px);letter-spacing:.12em;text-transform:uppercase;margin-top:3px}
 .timePanel{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;background:radial-gradient(ellipse at 50% 35%,#1b3858 0%,#122238 58%,#0e1b2c 100%)}.timeDay{font-size:clamp(20px,2.5vw,34px);font-weight:750;color:#dceaff;text-transform:capitalize}.timeBig{font-size:clamp(58px,8.5vw,112px);font-weight:1000;color:#ffffff;line-height:1.05;letter-spacing:-.045em;text-shadow:0 2px 18px rgba(117,186,255,.22);font-variant-numeric:tabular-nums;margin:12px 0}.timeDate{font-size:clamp(15px,1.8vw,23px);font-weight:600;color:var(--muted);text-transform:capitalize}.timeZone{font-size:clamp(9px,.9vw,11px);color:#718ba7;letter-spacing:.16em;margin-top:18px}
-main{height:calc(100% - 76px);display:grid;grid-template-columns:minmax(270px,.85fr) minmax(0,1.4fr);grid-template-rows:minmax(220px,.78fr) minmax(0,1.22fr);gap:12px}
+main{height:calc(100% - 114px);display:grid;grid-template-columns:minmax(270px,.85fr) minmax(0,1.4fr);grid-template-rows:minmax(220px,.78fr) minmax(0,1.22fr);gap:12px}
 .panel{background:linear-gradient(145deg,var(--panel),#0e1b2c);border:1px solid var(--line);border-radius:17px;padding:clamp(11px,1.3vw,17px);min-width:0;min-height:0;overflow:hidden}
 .panelhead{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
 h2{font-size:clamp(13px,1.35vw,18px);margin:0;letter-spacing:.07em}.tag{font-size:clamp(8px,.85vw,11px);color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
@@ -35,6 +35,13 @@ h2{font-size:clamp(13px,1.35vw,18px);margin:0;letter-spacing:.07em}.tag{font-siz
 .status{position:fixed;bottom:3px;right:12px;color:#71839a;font-size:9px}
 @media(max-width:720px){body{height:auto;min-height:100%;overflow:auto}header{height:58px}main{height:auto;grid-template-columns:1fr;grid-template-rows:auto auto auto auto}.panel{min-height:210px}.calendarPanel{min-height:250px}.weatherPanel{min-height:220px}.transitPanel{min-height:260px}.status{position:static;text-align:right;margin-top:6px}}
 @media(min-width:721px) and (max-height:620px){body{padding:8px}header{height:48px;margin-bottom:8px}main{height:calc(100% - 56px);gap:8px;grid-template-rows:minmax(180px,.72fr) minmax(0,1.28fr)}.panel{padding:9px}.weatherDivider{margin:6px 0}.hour{padding:4px 2px}td{padding:4px}}
+
+.usefulNumbers{height:30px;margin-top:8px;display:flex;align-items:center;justify-content:center;gap:clamp(10px,2.2vw,28px);background:#122238;border:1px solid var(--line);border-radius:10px;padding:3px 10px;white-space:nowrap;overflow:hidden}
+.usefulNumbers .label{font-size:clamp(9px,.9vw,12px);font-weight:800;letter-spacing:.08em;color:var(--muted)}
+.usefulNumbers a{color:var(--white);text-decoration:none;font-size:clamp(10px,1.05vw,14px);font-weight:750}
+.usefulNumbers a b{color:var(--blue);font-size:1.12em;margin-right:4px}
+.usefulNumbers .emergency{color:#ffb2a8}
+@media(max-width:720px){.usefulNumbers{height:auto;min-height:42px;white-space:normal;flex-wrap:wrap;gap:7px 14px;padding:8px}.usefulNumbers .label{width:100%;text-align:center}main{height:auto}}
 </style>
 </head>
 <body>
@@ -69,6 +76,14 @@ h2{font-size:clamp(13px,1.35vw,18px);margin:0;letter-spacing:.07em}.tag{font-siz
   <div class="tableWrap" id="buses"><div class="empty">Loading bus departures…</div></div>
  </section>
 </main>
+<div class="usefulNumbers" aria-label="Useful emergency and service phone numbers">
+ <span class="label">USEFUL NUMBERS</span>
+ <a class="emergency" href="tel:110"><b>110</b>Fire</a>
+ <a class="emergency" href="tel:112"><b>112</b>Police</a>
+ <a class="emergency" href="tel:113"><b>113</b>Ambulance</a>
+ <a href="tel:116117"><b>116 117</b>Medical help</a>
+ <a href="tel:02800"><b>02800</b>Police non-emergency</a>
+</div>
 <div class="status" id="status">Connecting to live data…</div>
 <script>
 const STOP_ID = "NSR:StopPlace:58857"; // Exact Lørenskog stasjon stop place; no nearby stops
