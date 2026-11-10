@@ -6,141 +6,160 @@
 <meta name="theme-color" content="#07111f">
 <title>Lørenskog Live Board</title>
 <style>
-:root{--bg:#07111f;--panel:#101e30;--line:#26384d;--muted:#9fb0c4;--white:#f5f8fc;--green:#39d98a;--amber:#ffc857;--red:#ff6b6b;--blue:#75baff}
+:root{--bg:#07111f;--panel:#122238;--panel2:#172b43;--line:#2a4059;--muted:#9fb0c4;--white:#f5f8fc;--green:#39d98a;--amber:#ffc857;--red:#ff7474;--blue:#75baff}
 *{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;background:var(--bg);color:var(--white);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
-body{padding:clamp(10px,2vw,24px);overflow:hidden}
-header{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:14px}
-.brand{font-size:clamp(17px,2.1vw,27px);font-weight:800;letter-spacing:.08em}
-.sub{color:var(--muted);font-size:clamp(10px,1.1vw,14px);letter-spacing:.12em;text-transform:uppercase}
-.clock{text-align:right;font-size:clamp(25px,4vw,48px);font-weight:800;font-variant-numeric:tabular-nums;line-height:1}
-.date{color:var(--muted);font-size:clamp(10px,1.1vw,14px);margin-top:5px}
-main{height:calc(100% - 82px);display:grid;grid-template-columns:1fr 1fr;grid-template-rows:minmax(0,1fr) auto;gap:14px}
-.panel{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:clamp(10px,1.5vw,18px);min-height:0;overflow:hidden}
-.panelhead{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-h2{font-size:clamp(14px,1.6vw,20px);margin:0;letter-spacing:.08em}
-.tag{font-size:clamp(9px,1vw,12px);color:var(--muted);text-transform:uppercase}
-table{width:100%;border-collapse:collapse;table-layout:fixed}
-td{padding:clamp(7px,1vw,12px) 4px;border-bottom:1px solid var(--line);font-size:clamp(12px,1.35vw,17px);vertical-align:middle}
-tr:last-child td{border-bottom:0}
-.route{font-weight:900;font-size:clamp(13px,1.5vw,19px);width:19%;white-space:nowrap}
-.dest{font-weight:650;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.platform{color:var(--muted);font-size:.78em;display:block;margin-top:2px}
-.when{text-align:right;width:24%;font-weight:850;font-size:clamp(15px,1.9vw,24px);white-space:nowrap;font-variant-numeric:tabular-nums}
-.soon{color:var(--green)}.delayed{color:var(--amber)}.cancelled{color:var(--red);text-decoration:line-through}
-.empty{color:var(--muted);padding:20px 4px;font-size:14px}
-.weather{grid-column:1/-1;display:grid;grid-template-columns:1.1fr 1fr 1.2fr;align-items:center;gap:12px;padding:12px 18px}
-.current{display:flex;align-items:center;gap:14px}.temp{font-size:clamp(27px,4vw,46px);font-weight:850;line-height:1}.condition{color:var(--muted);font-size:clamp(11px,1.2vw,15px);margin-top:4px}
-.metrics{display:flex;gap:clamp(10px,2vw,28px);justify-content:center;flex-wrap:wrap}
-.metric strong{display:block;font-size:clamp(13px,1.5vw,18px)}.metric span{color:var(--muted);font-size:clamp(9px,1vw,12px)}
-.forecast{display:flex;justify-content:space-around;gap:8px;text-align:center}
-.forecast div{font-size:clamp(10px,1.1vw,14px);color:var(--muted)}.forecast strong{display:block;color:var(--white);font-size:clamp(12px,1.4vw,17px);margin-top:3px}
-.status{position:fixed;bottom:5px;right:12px;color:#71839a;font-size:10px}
-@media(max-width:650px){body{overflow:auto}main{height:auto;grid-template-columns:1fr;grid-template-rows:auto auto auto}.panel{min-height:230px}.weather{grid-column:auto;grid-template-columns:1fr 1fr}.forecast{grid-column:1/-1}.status{position:static;text-align:right;margin-top:6px}}
+body{padding:clamp(10px,1.6vw,22px);overflow:hidden}
+header{height:64px;display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+.brand{font-size:clamp(17px,2vw,26px);font-weight:850;letter-spacing:.09em}.sub{color:var(--muted);font-size:clamp(9px,1vw,12px);letter-spacing:.12em;text-transform:uppercase;margin-top:3px}
+.clock{text-align:right;font-size:clamp(28px,3.7vw,46px);font-weight:850;font-variant-numeric:tabular-nums;line-height:1}.dateLine{color:var(--muted);font-size:clamp(10px,1vw,13px);margin-top:5px;text-align:right}
+main{height:calc(100% - 76px);display:grid;grid-template-columns:minmax(270px,.85fr) minmax(0,1.4fr);grid-template-rows:minmax(220px,.78fr) minmax(0,1.22fr);gap:12px}
+.panel{background:linear-gradient(145deg,var(--panel),#0e1b2c);border:1px solid var(--line);border-radius:17px;padding:clamp(11px,1.3vw,17px);min-width:0;min-height:0;overflow:hidden}
+.panelhead{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
+h2{font-size:clamp(13px,1.35vw,18px);margin:0;letter-spacing:.07em}.tag{font-size:clamp(8px,.85vw,11px);color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.calendarPanel{display:flex;flex-direction:column}.monthTitle{font-size:clamp(15px,1.6vw,21px);font-weight:750}.monthNav{display:flex;align-items:center;justify-content:space-between;margin:0 0 7px}
+.calendar{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:3px;flex:1;align-content:stretch}
+.dayName,.day{display:flex;align-items:center;justify-content:center;border-radius:7px;min-height:0;font-size:clamp(10px,1.05vw,14px)}
+.dayName{color:#8fa6bf;font-size:clamp(8px,.85vw,11px);font-weight:700}
+.day{background:rgba(255,255,255,.035);color:#e3ebf5}.day.other{color:#60748c;background:transparent}.day.today{background:var(--blue);color:#07111f;font-weight:900;box-shadow:0 0 0 2px rgba(117,186,255,.2)}
+.calendarFoot{display:flex;justify-content:space-between;color:var(--muted);font-size:clamp(9px,.9vw,11px);margin-top:7px}
+.weatherPanel{display:flex;flex-direction:column}.weatherTop{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:0}
+.current{display:flex;align-items:center;gap:12px}.weatherIcon{font-size:clamp(34px,4vw,56px)}.temp{font-size:clamp(30px,4vw,48px);font-weight:850;line-height:1}.condition{color:var(--muted);font-size:clamp(10px,1vw,13px);margin-top:3px}
+.metrics{display:flex;gap:clamp(12px,2vw,26px);justify-content:flex-end;flex-wrap:wrap}.metric strong{display:block;font-size:clamp(13px,1.45vw,18px)}.metric span{color:var(--muted);font-size:clamp(8px,.85vw,11px)}
+.weatherDivider{height:1px;background:var(--line);margin:10px 0}
+.hourly{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px;text-align:center;flex:1;align-items:center}
+.hour{background:rgba(255,255,255,.035);border-radius:10px;padding:7px 3px}.hour span{display:block;color:var(--muted);font-size:clamp(9px,.9vw,12px)}.hour b{display:block;font-size:clamp(12px,1.35vw,17px);margin-top:3px}.hour i{font-style:normal;font-size:clamp(16px,1.8vw,23px);display:block;margin:3px 0}
+.transitPanel{display:flex;flex-direction:column}.transitPanel .panelhead{margin-bottom:5px}.feedNote{color:var(--muted);font-size:clamp(8px,.8vw,10px);white-space:nowrap}
+.tableWrap{min-height:0;overflow:hidden}table{width:100%;border-collapse:collapse;table-layout:fixed}td{padding:clamp(5px,.72vw,9px) 4px;border-bottom:1px solid var(--line);font-size:clamp(11px,1.15vw,15px);vertical-align:middle}tr:last-child td{border-bottom:0}
+.route{font-weight:900;font-size:clamp(13px,1.4vw,18px);width:17%;white-space:nowrap;color:var(--blue)}.dest{font-weight:650;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.when{text-align:right;width:25%;font-weight:850;font-size:clamp(14px,1.65vw,21px);white-space:nowrap;font-variant-numeric:tabular-nums}.subtime{color:var(--muted);font-size:.68em;display:block;margin-top:2px;font-weight:500}
+.soon{color:var(--green)}.delayed{color:var(--amber)}.cancelled{color:var(--red);text-decoration:line-through}.empty{color:var(--muted);padding:16px 4px;font-size:clamp(11px,1vw,13px)}
+.status{position:fixed;bottom:3px;right:12px;color:#71839a;font-size:9px}
+@media(max-width:720px){body{height:auto;min-height:100%;overflow:auto}header{height:58px}main{height:auto;grid-template-columns:1fr;grid-template-rows:auto auto auto auto}.panel{min-height:210px}.calendarPanel{min-height:250px}.weatherPanel{min-height:220px}.transitPanel{min-height:260px}.status{position:static;text-align:right;margin-top:6px}}
+@media(min-width:721px) and (max-height:620px){body{padding:8px}header{height:48px;margin-bottom:8px}main{height:calc(100% - 56px);gap:8px;grid-template-rows:minmax(180px,.72fr) minmax(0,1.28fr)}.panel{padding:9px}.weatherDivider{margin:6px 0}.hour{padding:4px 2px}td{padding:4px}}
 </style>
 </head>
 <body>
 <header>
- <div><div class="brand">LØRENSKOG <span style="color:var(--blue)">LIVE</span></div><div class="sub">Train & bus departures · Norway</div></div>
- <div><div class="clock" id="clock">--:--</div><div class="date" id="date">Loading date…</div></div>
+ <div><div class="brand">LØRENSKOG <span style="color:var(--blue)">LIVE</span></div><div class="sub">Local departures · weather · calendar</div></div>
+ <div><div class="clock" id="clock">--:--</div><div class="dateLine" id="dateLine">Loading date…</div></div>
 </header>
 <main>
- <section class="panel">
-  <div class="panelhead"><h2>🚆 TRAINS</h2><span class="tag">Lørenskog stasjon</span></div>
-  <div id="trains" class="empty">Loading train departures…</div>
+ <section class="panel calendarPanel">
+  <div class="panelhead"><h2>📅 CALENDAR</h2><span class="tag" id="weekNo">WEEK --</span></div>
+  <div class="monthNav"><div class="monthTitle" id="monthTitle">Loading…</div><span class="tag">TODAY HIGHLIGHTED</span></div>
+  <div class="calendar" id="calendar"></div>
+  <div class="calendarFoot"><span id="calendarToday">Today</span><span>Europe / Oslo</span></div>
  </section>
- <section class="panel">
-  <div class="panelhead"><h2>🚌 BUSES</h2><span class="tag">Lørenskog stasjon</span></div>
-  <div id="buses" class="empty">Loading bus departures…</div>
- </section>
- <section class="panel weather">
-  <div class="current"><div id="weatherIcon" style="font-size:clamp(34px,5vw,58px)">🌤️</div><div><div class="temp" id="temp">--°</div><div class="condition" id="condition">Loading weather…</div></div></div>
-  <div class="metrics">
-   <div class="metric"><strong id="rain">--%</strong><span>Rain chance</span></div>
-   <div class="metric"><strong id="wind">--</strong><span>Wind km/h</span></div>
-   <div class="metric"><strong id="feels">--°</strong><span>Feels like</span></div>
+ <section class="panel weatherPanel">
+  <div class="panelhead"><h2>🌤️ WEATHER</h2><span class="tag">LØRENSKOG</span></div>
+  <div class="weatherTop">
+   <div class="current"><div class="weatherIcon" id="weatherIcon">🌤️</div><div><div class="temp" id="temp">--°</div><div class="condition" id="condition">Loading weather…</div></div></div>
+   <div class="metrics">
+    <div class="metric"><strong id="rain">--%</strong><span>Rain chance</span></div>
+    <div class="metric"><strong id="wind">-- km/h</strong><span>Wind</span></div>
+    <div class="metric"><strong id="feels">--°</strong><span>Feels like</span></div>
+   </div>
   </div>
-  <div class="forecast" id="forecast"><div>Later<strong>--°</strong></div><div>Evening<strong>--°</strong></div><div>Tomorrow<strong>--°</strong></div></div>
+  <div class="weatherDivider"></div>
+  <div class="hourly" id="hourly"><div class="hour"><span>Next</span><i>—</i><b>--°</b></div></div>
+ </section>
+ <section class="panel transitPanel">
+  <div class="panelhead"><h2>🚆 TRAINS</h2><span class="tag">LØRENSKOG STASJON</span></div>
+  <div class="tableWrap" id="trains"><div class="empty">Loading train departures…</div></div>
+ </section>
+ <section class="panel transitPanel">
+  <div class="panelhead"><h2>🚌 BUSES</h2><span class="tag">LØRENSKOG STASJON ONLY</span></div>
+  <div class="tableWrap" id="buses"><div class="empty">Loading bus departures…</div></div>
  </section>
 </main>
 <div class="status" id="status">Connecting to live data…</div>
 <script>
-const STOP_ID = "NSR:StopPlace:58857"; // Lørenskog stasjon
+const STOP_ID = "NSR:StopPlace:58857"; // Exact Lørenskog stasjon stop place; no nearby stops
 const LAT = 59.94480, LON = 10.94460;
 const ENTUR_URL = "https://api.entur.io/journey-planner/v3/graphql";
-const QUERY = `query Board($stopPlaceId: String!, $numberOfDepartures: Int = 24, $startTime: DateTime) {
- stopPlace(id: $stopPlaceId) {
-  name
-  estimatedCalls(numberOfDepartures: $numberOfDepartures, includeCancelledTrips: true, startTime: $startTime) {
-   quay { publicCode name }
-   destinationDisplay { frontText }
-   aimedDepartureTime expectedDepartureTime
-   serviceJourney { transportMode line { publicCode } }
-   cancellation realtime
-  }
- }
-}`;
+const QUERY = 'query Board($stopPlaceId: String!, $numberOfDepartures: Int = 60, $startTime: DateTime) { stopPlace(id: $stopPlaceId) { name estimatedCalls(numberOfDepartures: $numberOfDepartures, includeCancelledTrips: true, startTime: $startTime) { quay { publicCode name } destinationDisplay { frontText } aimedDepartureTime expectedDepartureTime serviceJourney { transportMode line { publicCode } } cancellation realtime } } }';
 const $ = id => document.getElementById(id);
 const tz = "Europe/Oslo";
 function tick(){
  const now = new Date();
  $("clock").textContent = new Intl.DateTimeFormat("nb-NO",{hour:"2-digit",minute:"2-digit",timeZone:tz}).format(now);
- $("date").textContent = new Intl.DateTimeFormat("nb-NO",{weekday:"long",day:"numeric",month:"long",timeZone:tz}).format(now);
+ $("dateLine").textContent = new Intl.DateTimeFormat("nb-NO",{weekday:"long",day:"numeric",month:"long",year:"numeric",timeZone:tz}).format(now);
+ $("calendarToday").textContent = "Today · " + new Intl.DateTimeFormat("nb-NO",{day:"numeric",month:"long",timeZone:tz}).format(now);
+}
+function drawCalendar(){
+ const now = new Date();
+ const parts = new Intl.DateTimeFormat("en-CA",{timeZone:tz,year:"numeric",month:"numeric",day:"numeric"}).formatToParts(now);
+ const p = {}; parts.forEach(x=>p[x.type]=Number(x.value));
+ const year=p.year, month=p.month, today=p.day;
+ const first=new Date(Date.UTC(year,month-1,1)), offset=(first.getUTCDay()+6)%7, days=new Date(Date.UTC(year,month,0)).getUTCDate();
+ const prevDays=new Date(Date.UTC(year,month-1,0)).getUTCDate();
+ $("monthTitle").textContent=new Intl.DateTimeFormat("nb-NO",{month:"long",year:"numeric",timeZone:tz}).format(new Date(Date.UTC(year,month-1,15,12)));
+ $("weekNo").textContent="WEEK "+new Intl.DateTimeFormat("en-GB",{timeZone:tz,week:"numeric"}).format(now);
+ const names=["M","T","W","T","F","L","S"], html=names.map(n=>'<div class="dayName">'+n+'</div>');
+ for(let i=0;i<42;i++){
+  let d, cls="day";
+  if(i<offset){d=prevDays-offset+i+1;cls+=" other"}
+  else if(i>=offset+days){d=i-offset-days+1;cls+=" other"}
+  else{d=i-offset+1;if(d===today)cls+=" today"}
+  html.push('<div class="'+cls+'">'+d+'</div>');
+ }
+ $("calendar").innerHTML=html.join("");
 }
 function mins(iso){return Math.max(0,Math.round((new Date(iso)-Date.now())/60000))}
 function time(iso){return new Intl.DateTimeFormat("nb-NO",{hour:"2-digit",minute:"2-digit",timeZone:tz}).format(new Date(iso))}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 function renderRows(target,calls){
- if(!calls.length){$(target).innerHTML='<div class="empty">No upcoming departures found.</div>';return}
- const rows=calls.slice(0,8).map(c=>{
-  const dep=c.expectedDepartureTime||c.aimedDepartureTime;
-  const m=mins(dep), cancelled=!!c.cancellation;
+ if(!calls.length){$(target).innerHTML='<div class="empty">No upcoming departures at this stop.</div>';return}
+ const rows=calls.slice(0,6).map(c=>{
+  const dep=c.expectedDepartureTime||c.aimedDepartureTime, m=mins(dep), cancelled=!!c.cancellation;
   const delay=Math.round((new Date(c.expectedDepartureTime||c.aimedDepartureTime)-new Date(c.aimedDepartureTime))/60000);
-  const when=cancelled?'CANCELLED':m===0?'NOW':m+' min';
-  const cls=cancelled?'cancelled':delay>=3?'delayed':'soon';
-  const route=c.serviceJourney?.line?.publicCode||'';
-  const dest=c.destinationDisplay?.frontText||'Destination';
-  const platform=c.quay?.publicCode||c.quay?.name||'';
-  return `<tr><td class="route">${esc(route)}</td><td class="dest">${esc(dest)}${platform?`<span class="platform">Platform ${esc(platform)}</span>`:''}</td><td class="when ${cls}">${when}<span class="platform">${time(dep)}${delay>=3&&!cancelled?' · +'+delay+' min':''}</span></td></tr>`;
- }).join('');
+  const when=cancelled?"CANCELLED":m===0?"NOW":m+" min", cls=cancelled?"cancelled":delay>=3?"delayed":"soon";
+  const route=c.serviceJourney&&c.serviceJourney.line?c.serviceJourney.line.publicCode:"";
+  const dest=c.destinationDisplay&&c.destinationDisplay.frontText?c.destinationDisplay.frontText:"Destination";
+  const platform=c.quay?(c.quay.publicCode||c.quay.name||""):"";
+  const sub=(platform?"Platform "+platform+" · ":"")+time(dep)+(delay>=3&&!cancelled?" · +"+delay+" min":"");
+  return '<tr><td class="route">'+esc(route)+'</td><td class="dest">'+esc(dest)+'</td><td class="when '+cls+'">'+when+'<span class="subtime">'+esc(sub)+'</span></td></tr>';
+ }).join("");
  $(target).innerHTML='<table><tbody>'+rows+'</tbody></table>';
 }
-function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 async function loadTransit(){
  try{
-  const r=await fetch(ENTUR_URL,{method:'POST',headers:{'Content-Type':'application/json','ET-Client-Name':'home-lorenskog-departure-board'},body:JSON.stringify({query:QUERY,variables:{stopPlaceId:STOP_ID,numberOfDepartures:30,startTime:new Date().toISOString()}})});
-  if(!r.ok) throw new Error('Entur HTTP '+r.status);
-  const j=await r.json(); if(j.errors?.length) throw new Error(j.errors[0].message);
-  const calls=j.data?.stopPlace?.estimatedCalls||[];
+  const r=await fetch(ENTUR_URL,{method:"POST",headers:{"Content-Type":"application/json","ET-Client-Name":"home-lorenskog-departure-board"},body:JSON.stringify({query:QUERY,variables:{stopPlaceId:STOP_ID,numberOfDepartures:60,startTime:new Date().toISOString()}})});
+  if(!r.ok)throw new Error("Entur HTTP "+r.status);
+  const j=await r.json();if(j.errors&&j.errors.length)throw new Error(j.errors[0].message);
+  const calls=(j.data&&j.data.stopPlace&&j.data.stopPlace.estimatedCalls)||[];
   const upcoming=calls.filter(c=>new Date(c.expectedDepartureTime||c.aimedDepartureTime)>=new Date(Date.now()-60000));
-  renderRows('trains',upcoming.filter(c=>['rail','metro','tram'].includes((c.serviceJourney?.transportMode||'').toLowerCase())));
-  renderRows('buses',upcoming.filter(c=>(c.serviceJourney?.transportMode||'').toLowerCase()==='bus'));
-  $("status").textContent='Transport updated '+time(new Date().toISOString())+' · refreshes every 45 sec';
+  upcoming.sort((a,b)=>new Date(a.expectedDepartureTime||a.aimedDepartureTime)-new Date(b.expectedDepartureTime||b.aimedDepartureTime));
+  renderRows("trains",upcoming.filter(c=>["rail","metro","tram"].includes(String(c.serviceJourney&&c.serviceJourney.transportMode||"").toLowerCase())));
+  // Bus calls are taken only from STOP_ID above. No nearby stops are queried or mixed in.
+  renderRows("buses",upcoming.filter(c=>String(c.serviceJourney&&c.serviceJourney.transportMode||"").toLowerCase()==="bus"));
+  $("status").textContent="Live transport · updated "+time(new Date().toISOString())+" · refreshes every 45 sec";
  }catch(e){
-  $("status").textContent='Transport feed unavailable: '+e.message;
-  if($("trains").textContent.includes('Loading')) $("trains").textContent='Could not load departures. Check connection / browser access.';
-  if($("buses").textContent.includes('Loading')) $("buses").textContent='Could not load departures. Check connection / browser access.';
+  $("status").textContent="Transport feed unavailable: "+e.message;
+  if($("trains").textContent.includes("Loading"))$("trains").innerHTML='<div class="empty">Could not load train departures. Check connection / browser access.</div>';
+  if($("buses").textContent.includes("Loading"))$("buses").innerHTML='<div class="empty">Could not load bus departures. Check connection / browser access.</div>';
  }
 }
-const weatherCode = code => {
- if(code===0)return ['☀️','Clear']; if([1,2].includes(code))return ['🌤️','Partly cloudy']; if(code===3)return ['☁️','Cloudy'];
- if([45,48].includes(code))return ['🌫️','Fog']; if([51,53,55,56,57].includes(code))return ['🌦️','Drizzle'];
- if([61,63,65,66,67,80,81,82].includes(code))return ['🌧️','Rain']; if([71,73,75,77,85,86].includes(code))return ['❄️','Snow'];
- if([95,96,99].includes(code))return ['⛈️','Thunderstorm']; return ['🌡️','Weather'];
+const weatherCode=code=>{
+ if(code===0)return ["☀️","Clear sky"];if([1,2].includes(code))return ["🌤️","Partly cloudy"];if(code===3)return ["☁️","Cloudy"];
+ if([45,48].includes(code))return ["🌫️","Fog"];if([51,53,55,56,57].includes(code))return ["🌦️","Drizzle"];
+ if([61,63,65,66,67,80,81,82].includes(code))return ["🌧️","Rain"];if([71,73,75,77,85,86].includes(code))return ["❄️","Snow"];
+ if([95,96,99].includes(code))return ["⛈️","Thunderstorm"];return ["🌡️","Weather"];
 };
 async function loadWeather(){
  try{
-  const url=`https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}&current=temperature_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m&hourly=precipitation_probability,temperature_2m&daily=temperature_2m_max,temperature_2m_min,weather_code&forecast_days=2&timezone=Europe%2FOslo`;
-  const r=await fetch(url);if(!r.ok)throw new Error('Weather HTTP '+r.status);const j=await r.json();
-  const [icon,desc]=weatherCode(j.current.weather_code);
-  $("weatherIcon").textContent=icon;$("temp").textContent=Math.round(j.current.temperature_2m)+'°C';$("condition").textContent=desc;
-  $("wind").textContent=Math.round(j.current.wind_speed_10m);$("feels").textContent=Math.round(j.current.apparent_temperature)+'°';
-  const now=new Date(), idx=j.hourly.time.findIndex(t=>new Date(t)>=now);
-  $("rain").textContent=(j.hourly.precipitation_probability[Math.max(0,idx)]??0)+'%';
-  const d=j.daily;
-  const fmt=(i)=>`${Math.round(d.temperature_2m_max[i])}° / ${Math.round(d.temperature_2m_min[i])}°`;
-  $("forecast").innerHTML=`<div>Today<strong>${fmt(0)}</strong></div><div>Tomorrow<strong>${fmt(1)}</strong></div><div>Rain now<strong>${Math.round(j.current.precipitation)} mm</strong></div>`;
- }catch(e){$("condition").textContent='Weather unavailable';}
+  const url="https://api.open-meteo.com/v1/forecast?latitude="+LAT+"&longitude="+LON+"&current=temperature_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m&hourly=temperature_2m,precipitation_probability,weather_code&forecast_days=2&timezone=Europe%2FOslo";
+  const r=await fetch(url);if(!r.ok)throw new Error("Weather HTTP "+r.status);const j=await r.json(),cur=j.current;
+  const info=weatherCode(cur.weather_code);
+  $("weatherIcon").textContent=info[0];$("temp").textContent=Math.round(cur.temperature_2m)+"°C";$("condition").textContent=info[1];
+  $("wind").textContent=Math.round(cur.wind_speed_10m)+" km/h";$("feels").textContent=Math.round(cur.apparent_temperature)+"°";
+  const now=new Date(), times=j.hourly.time, idx=Math.max(0,times.findIndex(t=>new Date(t)>=now));
+  $("rain").textContent=(j.hourly.precipitation_probability[idx]??0)+"%";
+  const cards=[];
+  for(let n=0;n<5;n++){const i=Math.min(idx+n+1,times.length-1), wx=weatherCode(j.hourly.weather_code[i]);const label=new Intl.DateTimeFormat("nb-NO",{hour:"2-digit",timeZone:tz}).format(new Date(times[i]));cards.push('<div class="hour"><span>'+label+'</span><i>'+wx[0]+'</i><b>'+Math.round(j.hourly.temperature_2m[i])+'°</b><span>'+j.hourly.precipitation_probability[i]+'% rain</span></div>')}
+  $("hourly").innerHTML=cards.join("");
+ }catch(e){$("condition").textContent="Weather unavailable"}
 }
-tick();setInterval(tick,1000);loadTransit();loadWeather();setInterval(loadTransit,45000);setInterval(loadWeather,1800000);
+tick();drawCalendar();setInterval(tick,1000);loadTransit();loadWeather();setInterval(loadTransit,45000);setInterval(loadWeather,1800000);
 </script>
 </body>
 </html>
