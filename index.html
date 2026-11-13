@@ -159,7 +159,7 @@ main{grid-template-rows:minmax(190px,.68fr) minmax(0,1.05fr)}
  </section>
  </div>
  <section class="panel newsPanel" id="newsView" aria-live="polite" hidden>
-  <div class="panelhead"><h2>🌍 WORLD NEWS</h2><span class="tag" id="newsUpdated">LOADING HEADLINES</span></div>
+  <div class="panelhead"><h2 id="newsCategory">🌍 WORLD NEWS</h2><span class="tag" id="newsUpdated">LOADING HEADLINES</span></div>
   <div class="newsContent">
    <a class="newsPhotoLink" id="newsPhotoLink" href="#" target="_blank" rel="noopener" aria-label="Open news article">
     <img class="newsPhoto" id="newsPhoto" alt="World news photograph" />
@@ -253,62 +253,74 @@ async function loadWeather(){
 }
 tick();setInterval(tick,1000);loadTransit();loadWeather();setInterval(loadTransit,45000);setInterval(loadWeather,1800000);
 
-/* Rotate departures and latest world headlines */
+/* Rotate departures with alternating world and Norway headlines */
 let showingNews = false;
 let newsItems = [];
 let newsIndex = 0;
-const NEWS_FEED = "https://api.rss2json.com/v1/api.json?rss_url=" + encodeURIComponent("https://feeds.bbci.co.uk/news/world/rss.xml");
+const RSS_PROXY = "https://api.rss2json.com/v1/api.json?rss_url=";
+const NEWS_FEEDS = [
+ {label:"🌍 WORLD NEWS",source:"BBC World News",url:"https://feeds.bbci.co.uk/news/world/rss.xml"},
+ {label:"🇳🇴 NORWAY NEWS",source:"The Local Norway",url:"https://www.thelocal.no/feed/"}
+];
+async function fetchNewsFeed(feed){
+ const url=RSS_PROXY+encodeURIComponent(feed.url);
+ const response=await fetch(url);
+ if(!response.ok) throw new Error("Could not load "+feed.source);
+ const data=await response.json();
+ return (data.items||[]).filter(item=>item.title&&item.link).slice(0,8).map(item=>({...item,feedLabel:feed.label,feedSource:feed.source}));
+}
 async function loadNews(){
  try{
-  const response = await fetch(NEWS_FEED);
-  if(!response.ok) throw new Error("News feed unavailable");
-  const data = await response.json();
-  const items = (data.items || []).filter(item => item.title && item.link);
-  if(!items.length) throw new Error("No headlines available");
-  newsItems = items.slice(0,12);
-  newsIndex = 0;
+  const results=await Promise.allSettled(NEWS_FEEDS.map(fetchNewsFeed));
+  const world=results[0].status==="fulfilled"?results[0].value:[];
+  const norway=results[1].status==="fulfilled"?results[1].value:[];
+  newsItems=[];
+  const count=Math.max(world.length,norway.length);
+  for(let i=0;i<count;i++){
+   if(world[i]) newsItems.push(world[i]);
+   if(norway[i]) newsItems.push(norway[i]);
+  }
+  if(!newsItems.length) throw new Error("No news feeds available");
+  newsIndex=0;
   showNewsItem();
-  $("newsUpdated").textContent = "UPDATED " + time(new Date().toISOString());
+  $("newsUpdated").textContent="UPDATED "+time(new Date().toISOString());
  }catch(error){
-  $("newsHeadline").textContent = "Latest headlines are temporarily unavailable";
-  $("newsSummary").textContent = "The departures board will continue to update normally.";
-  $("newsSource").textContent = "News feed unavailable";
+  $("newsHeadline").textContent="News headlines are temporarily unavailable";
+  $("newsSummary").textContent="The departures board will continue to update normally.";
+  $("newsSource").textContent="News feeds unavailable";
  }
 }
 function showNewsItem(){
  if(!newsItems.length) return;
- const item = newsItems[newsIndex % newsItems.length];
- const title = item.title || "Latest news";
- const raw = item.description || item.content || "";
- const description = raw.replace(/<[^>]*>/g," ").replace(/&nbsp;/g," ").replace(/&amp;/g,"&").replace(/&#39;/g,"'").replace(/&quot;/g,'"').replace(/\s+/g," ").trim();
- const imageMatch = raw.match(/<img[^>]+src=["']([^"']+)["']/i);
- const photo = item.thumbnail || (item.enclosure && item.enclosure.link) || (imageMatch && imageMatch[1]) || "";
- $("newsHeadline").innerHTML = "";
- const link = document.createElement("a");
- link.href = item.link;
- link.target = "_blank";
- link.rel = "noopener";
- link.textContent = title;
+ const item=newsItems[newsIndex%newsItems.length];
+ const title=item.title||"Latest news";
+ const raw=item.description||item.content||"";
+ const description=raw.replace(/<[^>]*>/g," ").replace(/&nbsp;/g," ").replace(/&amp;/g,"&").replace(/&#39;/g,"'").replace(/&quot;/g,'"').replace(/\\s+/g," ").trim();
+ const imageMatch=raw.match(/<img[^>]+src=["']([^"']+)["']/i);
+ const photo=item.thumbnail||(item.enclosure&&item.enclosure.link)||(imageMatch&&imageMatch[1])||"";
+ $("newsCategory").textContent=item.feedLabel||"📰 LATEST NEWS";
+ $("newsHeadline").innerHTML="";
+ const link=document.createElement("a");
+ link.href=item.link;link.target="_blank";link.rel="noopener";link.textContent=title;
  $("newsHeadline").appendChild(link);
- $("newsSummary").textContent = description.slice(0,210) || "Tap the headline to read the full story.";
- $("newsSource").textContent = item.author || "BBC World News";
- $("newsUpdated").textContent = "LATEST HEADLINES";
- $("newsPhotoLink").href = item.link;
- const img = $("newsPhoto");
+ $("newsSummary").textContent=description.slice(0,210)||"Tap the headline to read the full story.";
+ $("newsSource").textContent=item.feedSource||"News";
+ $("newsUpdated").textContent="LATEST HEADLINE";
+ $("newsPhotoLink").href=item.link;
+ const img=$("newsPhoto");
  if(photo){img.src=photo;img.style.display="block";$("newsPhotoLink").style.display="block";}
- else {img.removeAttribute("src");img.style.display="none";$("newsPhotoLink").style.display="none";}
+ else{img.removeAttribute("src");img.style.display="none";$("newsPhotoLink").style.display="none";}
 }
 function rotateBoard(){
- showingNews = !showingNews;
- $("transitView").hidden = showingNews;
- $("newsView").hidden = !showingNews;
+ showingNews=!showingNews;
+ $("transitView").hidden=showingNews;
+ $("newsView").hidden=!showingNews;
  if(showingNews) showNewsItem();
- else if(newsItems.length) newsIndex = (newsIndex + 1) % newsItems.length;
+ else if(newsItems.length) newsIndex=(newsIndex+1)%newsItems.length;
 }
 loadNews();
-setInterval(loadNews, 10 * 60 * 1000);
-setInterval(rotateBoard, 20000);
-
+setInterval(loadNews,10*60*1000);
+setInterval(rotateBoard,20000);
 </script>
 </body>
 </html>
