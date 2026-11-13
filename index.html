@@ -84,6 +84,25 @@ main{grid-template-rows:minmax(190px,.68fr) minmax(0,1.05fr)}
  .usefulNumbers a{font-size:15px}
 }
 
+
+/* Transit/news rotating area */
+main{grid-template-rows:minmax(190px,.68fr) minmax(0,1.05fr)}
+.transitView{grid-column:1 / -1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;min-height:0}
+.newsPanel{grid-column:1 / -1;min-height:0;display:flex;flex-direction:column;justify-content:center;padding:clamp(16px,2.3vw,30px) clamp(18px,2.8vw,36px)}
+.newsPanel[hidden]{display:none}
+.newsHeadline{font-size:clamp(25px,3.6vw,48px);line-height:1.18;font-weight:900;letter-spacing:-.025em;max-width:1100px}
+.newsSummary{font-size:clamp(15px,1.65vw,22px);line-height:1.45;color:#b8c8da;margin-top:16px;max-width:1000px}
+.newsFooter{display:flex;justify-content:space-between;gap:12px;color:#8fa6bf;font-size:clamp(11px,1vw,14px);font-weight:750;letter-spacing:.08em;margin-top:24px;text-transform:uppercase}
+.newsPanel a{color:inherit;text-decoration:none}
+@media(max-width:720px){
+ main{grid-template-rows:auto auto auto}
+ .transitView{grid-template-columns:1fr;grid-column:auto}
+ .newsPanel{grid-column:auto;min-height:260px}
+ .newsHeadline{font-size:clamp(24px,7vw,34px)}
+ .newsSummary{font-size:16px}
+ .newsFooter{font-size:10px}
+}
+
 </style>
 </head>
 <body>
@@ -109,6 +128,7 @@ main{grid-template-rows:minmax(190px,.68fr) minmax(0,1.05fr)}
   <div class="weatherDivider"></div>
   <div class="hourly" id="hourly"><div class="hour"><span>Next</span><i>—</i><b>--°</b></div></div>
  </section>
+ <div class="transitView" id="transitView">
  <section class="panel transitPanel">
   <div class="panelhead"><h2>🚆 TRAINS</h2><span class="tag">LØRENSKOG STASJON</span></div>
   <div class="tableWrap" id="trains"><div class="empty">Loading train departures…</div></div>
@@ -116,6 +136,13 @@ main{grid-template-rows:minmax(190px,.68fr) minmax(0,1.05fr)}
  <section class="panel transitPanel">
   <div class="panelhead"><h2>🚌 BUSES</h2><span class="tag">LØRENSKOG STASJON ONLY</span></div>
   <div class="tableWrap" id="buses"><div class="empty">Loading bus departures…</div></div>
+ </section>
+ </div>
+ <section class="panel newsPanel" id="newsView" aria-live="polite" hidden>
+  <div class="panelhead"><h2>📰 LATEST NEWS · NORWAY</h2><span class="tag" id="newsUpdated">LOADING HEADLINES</span></div>
+  <div class="newsHeadline" id="newsHeadline">Loading the latest headlines…</div>
+  <div class="newsSummary" id="newsSummary">News updates automatically</div>
+  <div class="newsFooter"><span id="newsSource">The Local Norway</span><span>HEADLINES · TAP TO READ</span></div>
  </section>
 
 
@@ -198,6 +225,56 @@ async function loadWeather(){
  }catch(e){$("condition").textContent="Weather unavailable"}
 }
 tick();setInterval(tick,1000);loadTransit();loadWeather();setInterval(loadTransit,45000);setInterval(loadWeather,1800000);
+
+/* Rotate departures and latest Norway headlines */
+let showingNews = false;
+let newsItems = [];
+let newsIndex = 0;
+const NEWS_FEED = "https://api.rss2json.com/v1/api.json?rss_url=" + encodeURIComponent("https://www.thelocal.no/feed/");
+async function loadNews(){
+ try{
+  const response = await fetch(NEWS_FEED);
+  if(!response.ok) throw new Error("News feed unavailable");
+  const data = await response.json();
+  const items = (data.items || []).filter(item => item.title && item.link);
+  if(!items.length) throw new Error("No headlines available");
+  newsItems = items.slice(0,12);
+  newsIndex = 0;
+  showNewsItem();
+  $("newsUpdated").textContent = "UPDATED " + time(new Date().toISOString());
+ }catch(error){
+  $("newsHeadline").textContent = "Latest headlines are temporarily unavailable";
+  $("newsSummary").textContent = "The departures board will continue to update normally.";
+  $("newsSource").textContent = "News feed unavailable";
+ }
+}
+function showNewsItem(){
+ if(!newsItems.length) return;
+ const item = newsItems[newsIndex % newsItems.length];
+ const title = item.title || "Latest news";
+ const description = (item.description || item.content || "").replace(/<[^>]*>/g," ").replace(/&nbsp;/g," ").replace(/&amp;/g,"&").replace(/&#39;/g,"'").replace(/&quot;/g,'"').replace(/\s+/g," ").trim();
+ $("newsHeadline").innerHTML = "";
+ const link = document.createElement("a");
+ link.href = item.link;
+ link.target = "_blank";
+ link.rel = "noopener";
+ link.textContent = title;
+ $("newsHeadline").appendChild(link);
+ $("newsSummary").textContent = description.slice(0,210) || "Tap the headline to read the full story.";
+ $("newsSource").textContent = item.author || "The Local Norway";
+ $("newsUpdated").textContent = "LATEST HEADLINES";
+}
+function rotateBoard(){
+ showingNews = !showingNews;
+ $("transitView").hidden = showingNews;
+ $("newsView").hidden = !showingNews;
+ if(showingNews) showNewsItem();
+ else if(newsItems.length) newsIndex = (newsIndex + 1) % newsItems.length;
+}
+loadNews();
+setInterval(loadNews, 10 * 60 * 1000);
+setInterval(rotateBoard, 20000);
+
 </script>
 </body>
 </html>
