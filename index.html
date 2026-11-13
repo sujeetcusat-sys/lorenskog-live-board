@@ -86,6 +86,8 @@ main{grid-template-rows:minmax(190px,.68fr) minmax(0,1.05fr)}
 
 
 /* Transit/news rotating area */
+/* Ensure the hidden view is actually removed from layout; component display rules otherwise override the browser default. */
+.transitView[hidden], .newsPanel[hidden]{display:none!important}
 main{grid-template-rows:minmax(190px,.68fr) minmax(0,1.05fr)}
 .transitView{grid-column:1 / -1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;min-height:0}
 .newsPanel{grid-column:1 / -1;min-height:0;display:flex;flex-direction:column;justify-content:center;padding:clamp(16px,2.3vw,30px) clamp(18px,2.8vw,36px)}
@@ -226,7 +228,7 @@ async function loadWeather(){
 }
 tick();setInterval(tick,1000);loadTransit();loadWeather();setInterval(loadTransit,45000);setInterval(loadWeather,1800000);
 
-/* Rotate departures and latest Norway headlines */
+/* Rotate departures and latest world headlines */
 let showingNews = false;
 let newsItems = [];
 let newsIndex = 0;
