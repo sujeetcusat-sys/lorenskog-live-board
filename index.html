@@ -139,7 +139,7 @@ main{grid-template-rows:minmax(190px,.68fr) minmax(0,1.05fr)}
  </section>
  </div>
  <section class="panel newsPanel" id="newsView" aria-live="polite" hidden>
-  <div class="panelhead"><h2>📰 LATEST NEWS · NORWAY</h2><span class="tag" id="newsUpdated">LOADING HEADLINES</span></div>
+  <div class="panelhead"><h2>🌍 WORLD NEWS · LATEST HEADLINES</h2><span class="tag" id="newsUpdated">LOADING HEADLINES</span></div>
   <div class="newsHeadline" id="newsHeadline">Loading the latest headlines…</div>
   <div class="newsSummary" id="newsSummary">News updates automatically</div>
   <div class="newsFooter"><span id="newsSource">The Local Norway</span><span>HEADLINES · TAP TO READ</span></div>
@@ -230,7 +230,7 @@ tick();setInterval(tick,1000);loadTransit();loadWeather();setInterval(loadTransi
 let showingNews = false;
 let newsItems = [];
 let newsIndex = 0;
-const NEWS_FEED = "https://api.rss2json.com/v1/api.json?rss_url=" + encodeURIComponent("https://www.thelocal.no/feed/");
+const NEWS_FEED = "https://api.rss2json.com/v1/api.json?rss_url=" + encodeURIComponent("https://feeds.bbci.co.uk/news/world/rss.xml");
 async function loadNews(){
  try{
   const response = await fetch(NEWS_FEED);
@@ -261,7 +261,7 @@ function showNewsItem(){
  link.textContent = title;
  $("newsHeadline").appendChild(link);
  $("newsSummary").textContent = description.slice(0,210) || "Tap the headline to read the full story.";
- $("newsSource").textContent = item.author || "The Local Norway";
+ $("newsSource").textContent = item.author || "BBC World News";
  $("newsUpdated").textContent = "LATEST HEADLINES";
 }
 function rotateBoard(){
